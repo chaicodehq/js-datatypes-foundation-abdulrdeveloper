@@ -51,21 +51,62 @@
  *   findCheapestAndCostliest(150, 80, 200) // => { cheapest: 80, costliest: 200 }
  */
 export function parseFare(fareString) {
-  // Your code here
+  
+  if(typeof fareString!== "string"){
+    return -1;
+  }
+  
+ let final =  parseFloat(fareString);
+ if(isNaN(final)){
+  return -1;
+ }
+ else{
+  return final;
+ }
+
 }
 
 export function roundFare(amount, decimalPlaces) {
-  // Your code here
+  
+  if(typeof amount !== "number" || !Number.isInteger(decimalPlaces) || decimalPlaces < 0){
+    return "";
+  }
+  let finalamountstring = amount.toFixed(decimalPlaces);
+ return finalamountstring;
 }
 
 export function calculateSurge(baseFare, surgeMultiplier) {
-  // Your code here
+  if(baseFare < 0 || surgeMultiplier < 0 || typeof baseFare !== "number" || typeof surgeMultiplier !== "number"){
+    return 0;
+  }
+
+  let final = baseFare * surgeMultiplier
+  return Math.ceil(final);
 }
 
 export function findCheapestAndCostliest(...fares) {
-  // Your code here
+ 
+  function validfares(fare){
+    return (typeof fare === "number" && !isNaN(fare));
+  }
+
+  let finalvalid = fares.filter(validfares);
+  
+  if(finalvalid.length <= 0){
+    return null;
+  }
+  let min = Math.min(...finalvalid);  //... ka matlab he ke uss array ki inner items vo kitni bi ho sakti hain
+  let max = Math.max(...finalvalid);
+  return { cheapest: min, costliest: max }
 }
 
 export function getDistanceDifference(from, to) {
-  // Your code here
+  let first =parseInt(from);
+  let second =parseInt(to);
+  let final = Math.abs(first-second);
+
+  if(isNaN(first) || isNaN(second)){
+    return -1;
+  }
+  return final;
 }
