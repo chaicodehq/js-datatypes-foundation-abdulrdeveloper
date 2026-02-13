@@ -46,17 +46,44 @@
  *   updatePrices({meetha:30, saada:20}, 10)              // => {meetha:40, saada:30}
  */
 export function createPaanOrder(basePaan, customizations) {
-  // Your code here
+  if(typeof basePaan !== "object" || basePaan === null || Array.isArray (basePaan)){
+    return {};
+  }
+  if(typeof customizations !== "object" || customizations === null || Array.isArray(customizations)){
+    return Object.assign({}, basePaan);
+  }
+  else{
+    return Object.assign({}, basePaan, customizations);
+  }
 }
 
 export function freezeMenu(menu) {
-  // Your code here
+  if(typeof menu !== "object" || menu === null || Array.isArray (menu)){
+    return {};
+  }
+  return Object.freeze(menu);
 }
 
 export function updatePrices(menu, increase) {
-  // Your code here
+  if(typeof menu !== "object" || menu === null || typeof increase !== "number"){
+    return {};
+  }
+
+  let finalarray = Object.entries(menu);  // object ko array mai convert kia
+
+  function increasevalue([key,value]){    // jo converted array hogi usmay 2 input hongay ek key means name and 2oosri value hogi like apple:30;  
+    return [key, value + increase]; // key ko same rakha lakin value mai increase krdia jitna bi hoga.
+  }   
+  let newarray = finalarray.map(increasevalue);    // map se callback kia takay callback bi ho jaiy and return bi mil jaiy
+  return Object.fromEntries(newarray);         // again array ko object mai covert krkay return krdia 
 }
 
 export function mergeDailySpecials(regularMenu, specialsMenu) {
-  // Your code here
+  if(typeof regularMenu !== "object" || regularMenu === null || Array.isArray(regularMenu)){
+    regularMenu = {};
+  }
+   if(typeof specialsMenu !== "object" || specialsMenu === null || Array.isArray(specialsMenu)){
+    specialsMenu = {};
+  }
+  return {...regularMenu,...specialsMenu}; // ... it will copy all and also override double item 
 }
